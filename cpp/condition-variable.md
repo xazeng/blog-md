@@ -2,7 +2,7 @@
 title: c++11 条件变量
 categories: cpp
 date: 2019-08-01 15:18:10
-tags: c++11, c++
+tags: [cpp11, cpp]
 ---
 
 比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。
@@ -12,6 +12,7 @@ tags: c++11, c++
 
 先看下这个消息队列的最终实现：
 
+```cpp
     void Push(void *msg)
     {
         std::unique_lock<std::mutex> lock(m_mutex);
@@ -41,13 +42,14 @@ tags: c++11, c++
 
         // return nullptr;
     }
-
+```
 
 ***
 ## 为什么需要搭配一个互斥量使用？
 
 先假设不需要搭配互斥量使用，代码如下
 
+```cpp
     // WaitAndPop
     mutex.lock();
     if (!queue.empty)
@@ -58,6 +60,7 @@ tags: c++11, c++
     mutex.unlock();
     // 标注
     cond.wait();
+```
 
 queue 会被不同线程使用，所以需要一个锁来同步。
 这个锁必须在 cond.wait 前解锁，否则工作线程进入睡眠状态导致逻辑线程的 Push 无法获得锁。
@@ -82,6 +85,7 @@ std::condition_variable::wait 需要一个锁作参数基本上避免了这种�
 虚假唤醒的意思是即使没有调用 cond.notify_one , cond.wait 也有可能返回。
 留意下面这段代码：
 
+```cpp
     // WaitAndPop
     std::unique_lock<std::mutex> lock(m_mutex);
     if (!m_queue.empty())  // 位置1
@@ -90,6 +94,7 @@ std::condition_variable::wait 需要一个锁作参数基本上避免了这种�
     }
 
     while(m_queue.empty()) m_cond.wait(lock); // 位置2
+```
 
 *位置1* 就是对虚假唤醒的判断处理，这一步一定要做，而且还要在获得锁后做。
 

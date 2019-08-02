@@ -2,7 +2,7 @@
 title: c++ 回调机制
 categories: cpp
 date: 2019-08-01 15:15:19
-tags: cpp, callback
+tags: [cpp, callback]
 ---
 
 我们会经常碰到需要使用回调函数的场合，比如：异步socket、定时器、windows消息处理等等。
@@ -14,6 +14,7 @@ tags: cpp, callback
 ----------
 ## 接口类
 
+```cpp
     class CallbackInterface
     {
     public:
@@ -43,6 +44,7 @@ tags: cpp, callback
     
     // main
     caller.register(&callee);
+```
 
 这种方式适用于 Callee 和 CallbackInterface 自然符合继承语义的情况：Callee 是一种 CallbackInterface，而 Caller 作为管理者，面对的是一堆的 CallbackInterface，至于具体是哪个 Callee 在做事，又是怎么做的， Caller 并不需要知道。
 如果 Callee 和 CallbackInterface 并不自然符合继承语义，最好不要使用这种方式，不然可能会碰到下列限制：
@@ -53,6 +55,7 @@ tags: cpp, callback
 ----------
 ## 公共基类
 
+```cpp
     class Object {...}
     typedef void(Object::*CALLBACK)();    
 
@@ -78,6 +81,7 @@ tags: cpp, callback
     
     // main
     caller.register(&callee, (CALLBACK)(&Callee::onCallback));
+```
 
 cocos-2dx 3.0 之前的版本用的就是这种方式。
 尽管它已经可以满足大多数需要回调函数的场合，但也还是有一些显而易见的缺点：
@@ -88,6 +92,7 @@ cocos-2dx 3.0 之前的版本用的就是这种方式。
 ----------
 ## std::function
 
+```cpp
     class Callee
     {
     public:
@@ -110,6 +115,7 @@ cocos-2dx 3.0 之前的版本用的就是这种方式。
     
     // main
     caller.register(std::bind(&Callee::onCallback, callee));
+```
     
 对比之前的实现，这种方式几乎解决了所有的缺点。
 * Callee 不需要继承公共基类或者回调接口类。
@@ -120,6 +126,7 @@ cocos-2dx 3.0 之前的版本用的就是这种方式。
 ----------
 ## 模板
 
+```cpp
     class Callee
     {
     public:
@@ -142,6 +149,7 @@ cocos-2dx 3.0 之前的版本用的就是这种方式。
     
     // main
     caller.register(makeFunctor((CBFunctor0*)0,callee,&Callee::onCallback));
+```
 
 需要包含一个回调函数库：<http://www.tedfelix.com/software/callback.h>    
 具体的实现原理和过程可以查看： <http://www.tutok.sk/fastgl/callback.html>

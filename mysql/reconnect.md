@@ -2,7 +2,7 @@
 title: mysql 重连处理
 categories: mysql
 date: 2019-08-01 15:57:14
-tags: mysql, database
+tags: [mysql, database]
 ---
 
 mysql 的连接有的时候会发生被动断开的情况：
@@ -25,10 +25,12 @@ mysql 客户端可以每隔一段时间调用一次 [mysql_ping][1] 以保持连
 
 如果我们不需要连接保持这些状态，那就可以使用 mysql 本身实现的[重连机制][3]：
 
+```cpp
     MYSQL *mysql = ::mysql_init(nullptr); 
     ::mysql_real_connect(...);
     char reconnect = 1;
     ::mysql_options(mysql, MYSQL_OPT_RECONNECT, (char *)&reconnect));
+```
 
 注意：跟其它选项不同，设置 MYSQL_OPT_RECONNECT 的代码是放在 mysql_real_connect 后面的。这是因为在 mysql 5.0.19 之前，mysql_real_connect 会重置该选项（mysql->reconnect = 0 ）。
 

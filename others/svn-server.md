@@ -2,7 +2,7 @@
 title: svn server 简单部署
 categories: 未分类
 date: 2019-08-01 16:00:49
-tags:
+tags: [svn, server]
 ---
 
 记录一次 svn 服务器的简单部署。

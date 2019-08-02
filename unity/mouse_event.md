@@ -2,7 +2,7 @@
 title: unity 鼠标事件
 categories: unity
 date: 2019-08-01 15:59:55
-tags: unity, ide
+tags: [unity, ide]
 ---
 
 刚开始学习 unity，鼠标事件处理或是入门会遇到的一个难点。其实说难不难，只是刚开始学，很多概念没有，所以比较容易疑惑。
