@@ -57,6 +57,7 @@ tags: [svn, server]
 
     创建 /var/www/html/svnpasswd/index.php，内容为：
 
+```php
     <?php
     $username = $_SERVER["PHP_AUTH_USER"]; //经过 AuthType Basic 认证的用户名
     $authed_pass = $_SERVER["PHP_AUTH_PW"]; //经过 AuthType Basic 认证的密码
@@ -215,3 +216,4 @@ tags: [svn, server]
     ?>
     </body>
     </html>
+```
