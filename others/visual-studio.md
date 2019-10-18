@@ -31,3 +31,12 @@ visual studio 是目前用过的 ide 中最好用的（vim 和 emacs 请绕道�
 * Lua Language  
     <http://vslua.codeplex.com/>
 
+* ReSharper
+
+
+------
+## vim 快捷键
+
+* ctrl+e ctrl+y   向上/向下 滚
+* ctrl+]  跳转
+* ctrl+- ctrl+shift+-  上次/下次 光标位置
