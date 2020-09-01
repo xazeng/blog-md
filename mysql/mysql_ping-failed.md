@@ -20,4 +20,4 @@ mysql 的文档对这个情况有非常具体的描述：
 >If your program uses CALL statements to execute stored procedures, the CLIENT_MULTI_RESULTS flag <u>must be</u> enabled. This is because each CALL returns a result to indicate the call status, in addition to any result sets that might be returned by statements executed within the procedure. Because CALL can return multiple results, process them using a loop that calls mysql_next_result() to determine whether there are more results.  
 详见：<https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/mysql-real-connect.html>
 
-
+2020.8.1 记：vt 服务器中的 center server 出现公会数据在周六0点后无法继续写入的问题。经查发现是其中一个业务使用 ostringstream.clean 导致多条语句出现在一次查询中，以致后续查询都没有生效也没有报错。虽然内网没有重现，但更新这个bug后外网也不再出现类似故障，应该可以基本认定是没有处理 *多结果返回* 导致。

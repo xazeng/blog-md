@@ -1,11 +1,11 @@
 ---
-title: Lua 语法要点
+title: Lua 
 categories: lua
 date: 2020-08-15 15:58:44
 tags: [lua, learn]
 ---
 
-Lua 语法要点
+Lua learning
 <!--more-->
 
 ## Values and Types
