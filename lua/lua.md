@@ -201,7 +201,7 @@ The **generic for** is equivalent to the code:
   * **-**               : substraction
   * **\***              : multiplication
   * **/**               : float division
-  * **//**              : floor division
+  * **//**              : integer division
   * **%**               : modulo
   * **^**               : exponentiation
   * **-**               : unary minus
